@@ -177,12 +177,15 @@ def main() -> None:
 
     #TODO: Create at least 3 Reader threads.
     readers = [
-        Reader(reader_id=1, monitor=monitor)
+        Reader(reader_id=1, monitor=monitor,rounds=3)
+        Reader(reader_id=2, monitor=monitor,rounds=3)
+        Reader(reader_id=3, monitor=monitor,rounds=3)
     ]
     
     #TODO: Create at least 2 writer threads.
     writers = [
-        Writer(writer_id=1, monitor=monitor)
+        Writer(writer_id=1, monitor=monitor,rounds=2)
+        Writer(writer_id=2, monitor=monitor,rounds=2)
     ]
 
     all_threads = readers + writers
