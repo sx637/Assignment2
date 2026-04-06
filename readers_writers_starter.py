@@ -55,7 +55,7 @@ class ReadersWritersMonitor:
         """
         with self.condition:
             # TODO: Replace 'pass' with your logic
-            while self.active_writers > 0 or se1f.waiting_writers > 0:
+            while self.active_writers > 0 or self.waiting_writers > 0:
                 print(f"Reader {reader_id} is waiting to read")
                 self.condition.wait()
             self.active_readers +=1
@@ -97,9 +97,9 @@ class ReadersWritersMonitor:
                 self.condition.wait()
                 
                 
-        self.waiting_writers -=1
-        self.active_writers =1
-        print(f"Writer {writer_id} starts writing")
+            self.waiting_writers -=1
+            self.active_writers =1
+            print(f"Writer {writer_id} starts writing")
         
 
     def end_write(self, writer_id: int) -> None:
@@ -116,7 +116,7 @@ class ReadersWritersMonitor:
             self.active_writers =0
             print(f"Writer{writer_id} stops writing")
             
-        self.condition.notify_all()
+            self.condition.notify_all()
 
 # Donot Change this
 class Reader(threading.Thread):
@@ -177,14 +177,14 @@ def main() -> None:
 
     #TODO: Create at least 3 Reader threads.
     readers = [
-        Reader(reader_id=1, monitor=monitor,rounds=3)
-        Reader(reader_id=2, monitor=monitor,rounds=3)
+        Reader(reader_id=1, monitor=monitor,rounds=3),
+        Reader(reader_id=2, monitor=monitor,rounds=3),
         Reader(reader_id=3, monitor=monitor,rounds=3)
     ]
     
     #TODO: Create at least 2 writer threads.
     writers = [
-        Writer(writer_id=1, monitor=monitor,rounds=2)
+        Writer(writer_id=1, monitor=monitor,rounds=2),
         Writer(writer_id=2, monitor=monitor,rounds=2)
     ]
 
