@@ -55,9 +55,9 @@ class ReadersWritersMonitor:
         """
         with self.condition:
             # TODO: Replace 'pass' with your logic
-            while self.active_writers > 0 :
+            while self.active_writers > 0 or se1f.waiting_writers > 0:
                 print(f"Reader {reader_id} is waiting to read")
-                self.condition.wait(
+                self.condition.wait()
             self.active_readers +=1
             print(f"Reader {reader_id} starts reading .Active readers = {self.active_readers}")
                 
@@ -91,7 +91,10 @@ class ReadersWritersMonitor:
         """
         with self.condition:
             # TODO: Replace 'pass' with your logic
-            pass
+            self.waiting_writers +=1
+            while self.active_readers > 0 or self.active_writers > 0:
+                print(f"Writer {writer_id} is waiting to write")
+                self.condition.wait()
 
     def end_write(self, writer_id: int) -> None:
         """
